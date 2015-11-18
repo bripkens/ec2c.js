@@ -1,7 +1,7 @@
 {
   "name": "ec2c",
   "version": "1.0.0",
-  "description": "Connect to EC2 instances via their names",
+  "description": "Fuzzy search through EC2 instances and connect via SSH",
   "main": "./index.js",
   "bin": {
     "ec2c": "./index.js"
@@ -17,5 +17,19 @@
     "clui": "0.3.1",
     "fuzzy.js": "0.0.2",
     "inquirer": "0.11.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/bripkens/ec2c.js.git"
+  },
+  "keywords": [
+    "amazon",
+    "aws",
+    "ec2",
+    "ssh",
+    "connect",
+    "cli",
+    "search",
+    "fuzzy"
+  ]
 }
