@@ -6,7 +6,12 @@ Aren't you tired of looking up EC2 instances by name via the AWS console, the AW
 
 This is what *ec2c* (**ec2 c**onnect) was made for! *ec2c* retrieves a list of all running EC2 instances, applies fuzzy search on that list and makes it easy for you to pick just the instance that you need.
 
-![Screenshot showing the CLI](./screenshot.png)
+<p align="center">
+  <img src="./screenshot.png"
+       alt="Screenshot showing the CLI"
+       width="400px"
+       align="center"/>
+</p>
 
 ## Installation
 You will need a recent Node.js version such as Node.js v4 to use *ec2c*. If you have Node.js installed, you can install *ec2c* via the following command.
