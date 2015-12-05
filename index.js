@@ -61,9 +61,19 @@ function selectInstanceAndStart(filter, user, instances) {
       }
       command += answers.instance;
       console.log('Executing: ' + clc.yellow(command));
-      execSync(command, {
-        stdio: 'inherit'
-      });
+
+      try {
+        execSync(command, {
+          stdio: 'inherit'
+        });
+      } catch (e) {
+        // We can safely ignore all reported issues as the output of SSH is send
+        // to stdout and stderr. Meaning: The user will see the error anyway
+        // and it provides no value to log an additional ec2c stacktrace.
+        // What should exit with the code of the child process to provide
+        // useful exit codes.
+        process.exit(e.status);
+      }
     }
   );
 }
