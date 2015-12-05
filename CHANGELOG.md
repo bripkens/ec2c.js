@@ -1,6 +1,6 @@
 # Changelog
 
-## unreleased
+## v1.1.1
  - Do not define an empty default user name when the environment variable is not set.
 
 ## v1.1.0
