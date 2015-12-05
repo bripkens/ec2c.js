@@ -14,6 +14,7 @@ const regions = require('./regions');
 // might take quite some time.
 const allInstances = getAllInstances();
 
+const defaultUserName = process.env.EC2C_DEFAULT_USER_NAME || '';
 
 inquirer.prompt(
   [
@@ -25,7 +26,8 @@ inquirer.prompt(
     {
       type: 'input',
       name: 'user',
-      message: 'As who would you like to connect?'
+      message: 'As who would you like to connect?',
+      'default': defaultUserName
     }
   ],
   answers => {

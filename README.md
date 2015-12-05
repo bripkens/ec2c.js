@@ -23,6 +23,15 @@ npm install -g ec2c
 ## Usage
 *ec2c* comes with a CLI that be used via `ec2c`. Just type in `ec2c` and the command prompt will take you from there.
 
+## Configuration
+*ec2c* currently has limited configuration parameters. It assumes that defaults are what you want. In a future release private keys and EC2 credentials section may become configurable.
+
+ - **Default User Name**: It is possible to define a default user name. To do so, specify it via an `EC2C_DEFAULT_USER_NAME` environment variable. For example, you could put the following into your `.bashrc`.
+
+```
+export EC2C_DEFAULT_USER_NAME='ubuntu'
+```
+
 ## License (MIT)
 
 Copyright (c) 2015 Ben Ripkens
