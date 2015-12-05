@@ -14,7 +14,7 @@ const regions = require('./regions');
 // might take quite some time.
 const allInstances = getAllInstances();
 
-const defaultUserName = process.env.EC2C_DEFAULT_USER_NAME || '';
+const defaultUserName = process.env.EC2C_DEFAULT_USER_NAME || undefined;
 
 inquirer.prompt(
   [
