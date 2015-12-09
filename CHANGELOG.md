@@ -1,5 +1,8 @@
 # Changelog
 
+## Unreleased
+ - Define a private key for SSH connections via the `EC2C_PRIVATE_KEY` environment variable.
+
 ## v1.1.1
  - Do not define an empty default user name when the environment variable is not set.
 

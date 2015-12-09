@@ -32,6 +32,12 @@ npm install -g ec2c
 export EC2C_DEFAULT_USER_NAME='ubuntu'
 ```
 
+- **Private Key**: If you do not want to store the private key for your EC2 instances in your SSH authentication agent, you can also specify the `EC2C_PRIVATE_KEY` environment variable. For example, you could put the following into your `.bashrc`.
+
+```
+export EC2C_PRIVATE_KEY="$HOME/.ssh/my-private-key-for-ec2-instances.pem"
+```
+
 ## License (MIT)
 
 Copyright (c) 2015 Ben Ripkens

@@ -14,6 +14,7 @@ const regions = require('./regions');
 // might take quite some time.
 const allInstances = getAllInstances();
 
+const privateKey = process.env.EC2C_PRIVATE_KEY || undefined;
 const defaultUserName = process.env.EC2C_DEFAULT_USER_NAME || undefined;
 
 inquirer.prompt(
@@ -56,6 +57,9 @@ function selectInstanceAndStart(filter, user, instances) {
     ],
     answers => {
       let command = 'ssh ';
+      if (privateKey) {
+        command += '-i ' + privateKey + ' ';
+      }
       if (user) {
         command += user + '@';
       }
