@@ -22,7 +22,8 @@ inquirer.prompt(
     {
       type: 'input',
       name: 'filter',
-      message: 'What are you looking for?'
+      message: 'What are you looking for?',
+      'default': getDefaultQuery()
     },
     {
       type: 'input',
@@ -153,4 +154,13 @@ function getInstances(region) {
       }
     });
   });
+}
+
+
+function getDefaultQuery() {
+  if (process.argv.length < 3) {
+    return undefined;
+  }
+
+  return process.argv.slice(2).join(' ');
 }
