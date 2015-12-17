@@ -10,6 +10,14 @@ const inquirer = require('inquirer');
 const execSync = require('child_process').execSync;
 const regions = require('./regions');
 
+fuzzy.analyzeSubTerms = true;
+fuzzy.analyzeSubTermDepth = 30;
+fuzzy.highlighting = {
+  before: '<§$',
+  after: '$§>'
+};
+const fuzzyMarkerReplacementRegex = /<§\$(.*?)\$§>/g;
+
 // Immediately start downloading instance data 'cause that
 // might take quite some time.
 const allInstances = getAllInstances();
@@ -40,6 +48,10 @@ inquirer.prompt(
       selectInstanceAndStart(answers.filter, answers.user, instances);
     }, error => {
       console.error(clc.red('Couldn\'t retrieve instances from EC2.'), error);
+      process.exit(1);
+    })
+    .then(null, error => {
+      console.error(clc.red('An unknown error occured.'), error);
       process.exit(1);
     });
   }
@@ -88,10 +100,15 @@ function buildUpInstancePrompt(filter, instances) {
   const choices = instances.reduce((choices, instance) => {
     const choice = {};
     const name = getName(instance);
+    const fuzzyResult = fuzzy(name, filter);
+    const highlightedName = fuzzyResult.highlightedTerm
+      .replace(fuzzyMarkerReplacementRegex, (match, p1) => clc.blue(p1));
+
     choice.value = instance.PublicDnsName;
-    choice.name = name + clc.blackBright(' (' + instance.Placement.AvailabilityZone + ')');
+    choice.name = highlightedName +
+      clc.blackBright(' (' + instance.Placement.AvailabilityZone + ')');
     choice.short = name;
-    choice.score = fuzzy(name, filter).score;
+    choice.score = fuzzyResult.score;
     choices.push(choice);
     return choices;
   }, []);

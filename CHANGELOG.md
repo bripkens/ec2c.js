@@ -2,6 +2,7 @@
 
 ## Unreleased
  - Define search query as command line argument.
+ - Highlight search query matches in instance selection.
 
 ## v1.2.0
  - Define a private key for SSH connections via the `EC2C_PRIVATE_KEY` environment variable.
