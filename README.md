@@ -1,6 +1,8 @@
 <h1 align="center">ec2c</h1>
 <p align="center">Search and connect to EC2 instances via SSH - the easy way.</p>
 
+[![NPM](https://nodei.co/npm/ec2c.png?downloads=true&downloadRank=true)](https://nodei.co/npm/ec2c/)
+
 ## Introduction
 Aren't you tired of looking up EC2 instances by name via the AWS console, the AWS CLI tools or custom scripts? Wouldn't it be great to just type in what you are looking for and get a list of EC2 instances that match your query and that you can connect to by hitting *enter*?
 
