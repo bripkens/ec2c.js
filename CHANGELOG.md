@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## v1.3.0
  - Define search query as command line argument.
  - Highlight search query matches in instance selection.
 
