@@ -25,6 +25,8 @@ npm install -g ec2c
 ## Usage
 *ec2c* comes with a CLI that can be used via `ec2c`. Just type in `ec2c` and the command prompt will take you from there. *ec2c* uses the [AWS Node.js SDK](https://github.com/aws/aws-sdk-js) which encapsulates authentication with AWS. It does this via the same mechanisms that are supported by the AWS CLI, i.e. it respects the AWS config and environment variables. For configuration instructions check out the documentation of the [AWS SDK](http://docs.aws.amazon.com/AWSJavaScriptSDK/guide/node-configuring.html).
 
+It even supports multiple AWS profiles via the `AWS_PROFILE` [environment variable](http://docs.aws.amazon.com/AWSJavaScriptSDK/guide/node-configuring.html#Using_Profiles_with_the_SDK).
+
 ## Configuration
 *ec2c* currently has limited configuration parameters. It assumes that defaults are what you want. In a future release private keys and EC2 credentials section may become configurable.
 
