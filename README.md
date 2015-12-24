@@ -28,7 +28,7 @@ npm install -g ec2c
 It even supports multiple AWS profiles via the `AWS_PROFILE` [environment variable](http://docs.aws.amazon.com/AWSJavaScriptSDK/guide/node-configuring.html#Using_Profiles_with_the_SDK).
 
 ## Configuration
-*ec2c* currently has limited configuration parameters. It assumes that defaults are what you want. In a future release private keys and EC2 credentials section may become configurable.
+*ec2c* currently has limited configuration parameters. It assumes that defaults are what you want.
 
  - **Default User Name**: It is possible to define a default user name. To do so, specify it via an `EC2C_DEFAULT_USER_NAME` environment variable. For example, you could put the following into your `.bashrc`.
 
@@ -40,6 +40,12 @@ export EC2C_DEFAULT_USER_NAME='ubuntu'
 
 ```
 export EC2C_PRIVATE_KEY="$HOME/.ssh/my-private-key-for-ec2-instances.pem"
+```
+
+- **AWS Key selection**: Use the `AWS_PROFILE` environment variable to select credentials from your AWS config file `$HOME/.aws/credentials`.
+
+```
+export AWS_PROFILE="work"
 ```
 
 ## License (MIT)
