@@ -114,7 +114,8 @@ function buildUpInstancePrompt(filter, instances) {
 
     choice.value = instance.PublicDnsName;
     choice.name = highlightedName +
-      clc.blackBright(' (' + instance.Placement.AvailabilityZone + ')');
+      clc.blackBright(' (' + getInstanceState(instance) + instance.Placement.AvailabilityZone + ')'
+    );
     choice.short = name;
     choice.score = fuzzyResult.score;
     choices.push(choice);
@@ -142,6 +143,15 @@ function getName(instance) {
   }
 
   return instance.PublicDnsName;
+}
+
+
+function getInstanceState(instance) {
+  const state = instance.State.Name;
+  if (state !== 'running') {
+    return clc.redBright(state.toUpperCase()) + ', ';
+  }
+  return '';
 }
 
 
