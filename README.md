@@ -48,6 +48,13 @@ export EC2C_PRIVATE_KEY="$HOME/.ssh/my-private-key-for-ec2-instances.pem"
 export AWS_PROFILE="work"
 ```
 
+- **Cache expiry**: ec2c caches the AWS instance list for five minutes. This caching is not always desirable, especially when starting up new instances. Use the environment variable `EC2C_CACHE_EXPIRY` to define the cache expiry in milliseconds.
+
+```sh
+# disable ec2c cache
+export EC2C_CACHE_EXPIRY='0'
+```
+
 ## License (MIT)
 
 Copyright (c) 2015 Ben Ripkens

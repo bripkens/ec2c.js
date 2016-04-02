@@ -2,7 +2,10 @@
 
 'use strict';
 
+const os = require('os');
+const fs = require('fs');
 const CLI = require('clui');
+const path = require('path');
 const AWS = require('aws-sdk');
 const clc = require('cli-color');
 const fuzzy = require('fuzzy.js');
@@ -17,6 +20,11 @@ fuzzy.highlighting = {
   after: '$§>'
 };
 const fuzzyMarkerReplacementRegex = /<§\$(.*?)\$§>/g;
+
+const cachePath = path.join(os.tmpdir(), 'ec2c-cache.json');
+const cacheExpiration = process.env.EC2C_CACHE_EXPIRY ?
+  parseInt(process.env.EC2C_CACHE_EXPIRY, 10) :
+  1000 * 60 * 5;
 
 // Immediately start downloading instance data 'cause that
 // might take quite some time.
@@ -138,8 +146,42 @@ function getName(instance) {
 
 
 function getAllInstances() {
+  return getCachedInstances()
+    .then(null, () => {
+      return loadAllInstances()
+        .then(instances => {
+          writeInstancesCache(instances);
+          return instances;
+        });
+    });
+}
+
+
+function getCachedInstances() {
+  return new Promise(resolve => resolve(fs.readFileSync(cachePath, {encoding: 'utf8'})))
+    .then(content => JSON.parse(content))
+    .then(json => {
+      if (json.cachedAt >= Date.now() - cacheExpiration) {
+        return json.instances;
+      }
+
+      throw new Error('Cache is out of date.');
+    });
+}
+
+
+function writeInstancesCache(instances) {
+  const cacheContent = {
+    cachedAt: Date.now(),
+    instances
+  };
+  fs.writeFileSync(cachePath, JSON.stringify(cacheContent, 0, 2), {encoding: 'utf8'});
+}
+
+
+function loadAllInstances() {
   const instanceRetrievalPromises = regions.map(region => {
-    return getInstances(region)
+    return loadInstances(region)
       .then(null, (err) => {
         console.error('Failed to retrieve instances for region %s', region);
 
@@ -157,7 +199,7 @@ function getAllInstances() {
 }
 
 
-function getInstances(region) {
+function loadInstances(region) {
   const ec2 = new AWS.EC2({region: region});
   return new Promise((resolve, reject) => {
     ec2.describeInstances((err, result) => {

@@ -1,5 +1,8 @@
 # Changelog
 
+## Unreleased
+ - Cache instance list for five minutes before refreshing the list from AWS.
+
 ## v1.3.0
  - Define search query as command line argument.
  - Highlight search query matches in instance selection.
