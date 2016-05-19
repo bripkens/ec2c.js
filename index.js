@@ -10,6 +10,7 @@ const AWS = require('aws-sdk');
 const clc = require('cli-color');
 const fuzzy = require('fuzzy.js');
 const inquirer = require('inquirer');
+const rightPad = require('right-pad');
 const execSync = require('child_process').execSync;
 const regions = require('./regions');
 
@@ -105,17 +106,32 @@ function selectInstanceAndStart(filter, user, instances) {
 
 
 function buildUpInstancePrompt(filter, instances) {
+  const longestInstanceName = instances.reduce((prev, instance) => {
+    const name = getName(instance);
+    if (prev.length <= name.length) {
+      return name;
+    }
+    return prev;
+  }, '');
+
+  const rightPadLength = longestInstanceName.length + 2;
+
   const choices = instances.reduce((choices, instance) => {
     const choice = {};
     const name = getName(instance);
-    const fuzzyResult = fuzzy(name, filter);
+    const fuzzyResult = fuzzy(rightPad(name, rightPadLength), filter);
     const highlightedName = fuzzyResult.highlightedTerm
       .replace(fuzzyMarkerReplacementRegex, (match, p1) => clc.blue(p1));
 
     choice.value = instance.PublicDnsName;
     choice.name = highlightedName +
-      clc.blackBright(' (' + getInstanceState(instance) + instance.Placement.AvailabilityZone + ')'
-    );
+      clc.blackBright(
+        ' (' +
+        getInstanceState(instance) +
+        instance.Placement.AvailabilityZone +
+        getInstancePublicHostname(instance) +
+        ')'
+      );
     choice.short = name;
     choice.score = fuzzyResult.score;
     choices.push(choice);
@@ -157,6 +173,11 @@ function getInstanceState(instance) {
     return clc.redBright(state.toUpperCase()) + ', ';
   }
   return '';
+}
+
+
+function getInstancePublicHostname(instance) {
+  return ', ' + instance.PublicDnsName;
 }
 
 
