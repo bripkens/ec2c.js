@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.5.0
+ - Improve order of matched instances with similar scores.
+
 ## v1.4.0
  - Cache instance list for five minutes before refreshing the list from AWS.
  - Show instance state in instance selection.

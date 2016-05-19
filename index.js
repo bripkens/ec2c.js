@@ -14,7 +14,7 @@ const execSync = require('child_process').execSync;
 const regions = require('./regions');
 
 fuzzy.analyzeSubTerms = true;
-fuzzy.analyzeSubTermDepth = 30;
+fuzzy.analyzeSubTermDepth = 100;
 fuzzy.highlighting = {
   before: '<§$',
   after: '$§>'
@@ -124,6 +124,11 @@ function buildUpInstancePrompt(filter, instances) {
 
   choices.sort((a, b) => {
     if (a.score === b.score) {
+      if (a.short.length < b.short.length) {
+        return 1;
+      } else if (a.short.length > b.short.length) {
+        return -1;
+      }
       return a.short.localeCompare(b.short);
     }
     return a.score - b.score;
