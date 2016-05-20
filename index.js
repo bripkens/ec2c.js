@@ -158,7 +158,7 @@ function buildUpInstancePrompt(filter, instances) {
 
 function getName(instance) {
   for (let i = 0; i < instance.Tags.length; i++) {
-    if (instance.Tags[i].Key === 'Name') {
+    if (instance.Tags[i].Key.toLowerCase() === 'name') {
       return instance.Tags[i].Value;
     }
   }

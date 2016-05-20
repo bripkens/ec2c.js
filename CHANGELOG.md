@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.5.1
+ - Instances name tag check should not be case sensitive.
+
 ## v1.5.0
  - Show public DNS name next to the instances' zones.
  - Improve order of matched instances with similar scores.
