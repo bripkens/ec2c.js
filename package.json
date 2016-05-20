@@ -1,6 +1,6 @@
 {
   "name": "ec2c",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "Fuzzy search through EC2 instances and connect via SSH",
   "main": "./index.js",
   "bin": {
