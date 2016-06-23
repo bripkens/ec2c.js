@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.5.2
  - List of instances fails to build up when names for instances cannot be determined.
  - Mouse cursor is invisible when quickly confirming selections in the input prompt.
 
