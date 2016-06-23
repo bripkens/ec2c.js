@@ -118,7 +118,7 @@ function buildUpInstancePrompt(filter, instances) {
 
   const choices = instances.reduce((choices, instance) => {
     const choice = {};
-    const name = getName(instance);
+    const name = getName(instance) || '<unnamed>';
     const fuzzyResult = fuzzy(rightPad(name, rightPadLength), filter);
     const highlightedName = fuzzyResult.highlightedTerm
       .replace(fuzzyMarkerReplacementRegex, (match, p1) => clc.blue(p1));

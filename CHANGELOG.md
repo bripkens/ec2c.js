@@ -1,5 +1,8 @@
 # Changelog
 
+## Unreleased
+ - List of instances fails to build up when names for instances cannot be determined.
+
 ## v1.5.1
  - Instances name tag check should not be case sensitive.
 
