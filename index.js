@@ -34,8 +34,9 @@ const allInstances = getAllInstances();
 const privateKey = process.env.EC2C_PRIVATE_KEY || undefined;
 const defaultUserName = process.env.EC2C_DEFAULT_USER_NAME || undefined;
 
-inquirer.prompt(
-  [
+const spinner = new CLI.Spinner('Downloading instance data…');
+
+inquirer.prompt([
     {
       type: 'input',
       name: 'filter',
@@ -48,23 +49,22 @@ inquirer.prompt(
       message: 'As who would you like to connect?',
       'default': defaultUserName
     }
-  ],
-  answers => {
-    const spinner = new CLI.Spinner('Downloading instance data…');
+  ])
+  .then(answers => {
     spinner.start();
-    allInstances.then(instances => {
-      spinner.stop();
-      selectInstanceAndStart(answers.filter, answers.user, instances);
-    }, error => {
-      console.error(clc.red('Couldn\'t retrieve instances from EC2.'), error);
-      process.exit(1);
-    })
-    .then(null, error => {
-      console.error(clc.red('An unknown error occured.'), error);
-      process.exit(1);
-    });
-  }
-);
+    return allInstances
+      .then(instances => {
+        spinner.stop();
+        selectInstanceAndStart(answers.filter, answers.user, instances);
+      }, error => {
+        console.error(clc.red('Couldn\'t retrieve instances from EC2.'), error);
+        process.exit(1);
+      })
+  })
+  .then(null, error => {
+    console.error(clc.red('An unknown error occured.'), error);
+    process.exit(1);
+  });;
 
 
 function selectInstanceAndStart(filter, user, instances) {
@@ -76,8 +76,7 @@ function selectInstanceAndStart(filter, user, instances) {
         message: 'Which system would you like to connect to?',
         choices: buildUpInstancePrompt(filter, instances)
       }
-    ],
-    answers => {
+    ]).then(answers => {
       let command = 'ssh ';
       if (privateKey) {
         command += '-i ' + privateKey + ' ';
@@ -100,8 +99,7 @@ function selectInstanceAndStart(filter, user, instances) {
         // useful exit codes.
         process.exit(e.status);
       }
-    }
-  );
+    });
 }
 
 
